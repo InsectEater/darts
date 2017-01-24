@@ -1,0 +1,103 @@
+body {
+    font-size: 16px;
+    font-family: verdana, arial, sans-serif;
+    background-image: url('bgr.jpg');
+    background-repeat: repeat;
+}
+
+
+
+.content {
+    width: 300px;
+    margin: auto;
+}
+
+#defaults {
+    display: none;
+}
+
+.keyboard {
+    display: flex;
+    width: 40%;
+    border: 1px solid #93c993;
+    flex-wrap: wrap;
+    float: left;
+}
+
+.dbl, .trpl {
+    width: 100%;
+    background-color: #aee8f0;
+
+}
+
+.btn.active {
+    background-color: #3f52c5;
+    color: white;
+}
+
+.dbl:hover, .trpl:hover {
+    background-color: #8ec8d0;    
+}
+
+.number, .be25, .be50, .miss, .del {
+    width: 50%;
+}
+
+.del {
+    background-color: #e4b0b0;
+}
+
+.del:hover {
+    background-color: #c49090;
+}
+
+.btn {
+    box-sizing: border-box;
+    border: 3px solid white;
+    text-align: center;
+    font-size: 1.3em;
+    padding: 0.2em;
+    font-weight: bold;
+    color: #444;
+    cursor: pointer;
+}
+
+.number, .be25, .be50 {
+    background-color: #93c993;
+}
+
+.number:hover, .be25:hover, .be50:hover {
+    background-color: #73a973;;
+}
+
+.rounds, .players {
+    width: 59%;
+    float: left;
+
+}
+
+.rounds {
+    text-align: center;
+}
+
+.player .container {
+    margin: 3px;
+    border: 1px solid gray;
+    background-color: #efefef;
+}
+
+.current .container{
+    background-color: #f9c24b;
+}
+
+.winner .container{
+    background-color: #555;
+}
+
+.player .name input {
+    border: none;
+    font-size: 1.2em;
+    text-align: center;
+    width: 100%;
+    background: rgba(0,0,0,0);
+}

@@ -1,0 +1,253 @@
+body {
+    font-size: 16px;
+    font-family: verdana, arial, sans-serif;
+    background-image: url('bgr.jpg');
+    background-repeat: repeat;
+}
+
+#defaults {
+    display: none;
+}
+
+.content {
+    width: 920px;
+    margin: auto;
+    position: relative;
+}
+
+
+.keyboard {
+    display: flex;
+    width: 300px;
+    border: 1px solid #93c993;
+    flex-wrap: wrap;
+    float: left;
+}
+
+.viewport {
+    width: calc(100% - 310px);
+    max-width: 750px;
+    float: left;
+}
+
+.menu-toggle {
+    width: 40px;
+    float: right;
+    background-color: #444;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+    font-size: 1.3em;
+}
+
+.rounds {
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    width: calc(100% - 40px);
+    line-height: 1.7px;
+}
+
+
+.dbl, .trpl {
+    width: 50%;
+    background-color: #aee8f0;
+
+}
+
+.dbl:hover, .trpl:hover {
+    background-color: #8ec8d0;    
+}
+
+.number, .be25, .be50, .miss, .del {
+    width: 25%;
+}
+
+.del {
+    background-color: #e4b0b0;
+}
+
+.del:hover {
+    background-color: #c49090;
+}
+
+.btn {
+    box-sizing: border-box;
+    border: 3px solid white;
+    text-align: center;
+    font-size: 1.3em;
+    padding: 0.2em;
+    font-weight: bold;
+    color: #444;
+    cursor: pointer;
+}
+
+.number, .be25, .be50 {
+    background-color: #93c993;
+}
+
+.number:hover, .be25:hover, .be50:hover {
+    background-color: #73a973;;
+}
+
+.players {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.player {
+    width: 200px;
+}
+
+.player .container {
+    margin: 3px;
+    border: 1px solid gray;
+    background-color: #efefef;
+    min-height: 88px;
+}
+
+.player .throws {
+    text-align: center;
+    line-height: 100%;
+    height: 1.3em;
+    margin: 4px 0;
+    display: flex;
+    width: 25%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    float: left;
+    box-sizing: border-box;
+    padding-left: 4px;
+}
+
+.player .throw {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 2px 0;
+    margin: 2px 0;
+    border: 2px solid white;
+    height: 1.4em;
+}
+
+.player .name {
+    width: 75%;
+    float: left;
+}
+
+.player .name input {
+    border: none;
+    font-size: 1.2em;
+    text-align: center;
+    width: 100%;
+    background: rgba(0,0,0,0);
+}
+
+
+.player .scores-container {
+    float: left;
+    width: 75%;
+}
+
+.player .scores {
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1.4em;
+    line-height: 1.6em;
+}
+
+.player .remaining {
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    font-size: 0.8em;
+}
+
+.player .nullify {
+    width: 50%;
+    text-align: center;
+    float: right;
+    color: red;
+}
+
+.btn.active {
+    background-color: #3f52c5;
+    color: white;
+}
+
+.nullify {
+    clear: both;
+    height: 1.3em;
+}
+
+
+.current .container{
+    background-color: #f9c24b;
+}
+
+.winner .container{
+    background-color: #555;
+}
+
+.settings {
+    position: absolute;
+    min-width: 260px;
+    max-width: 500px;
+    width: 50%;
+    right: 0;
+    top: 1.9em;
+    background-color: #444;
+    padding: 15px;
+    box-sizing: border-box;
+    display: none;
+    color: white;
+    border: 3px solid white;
+}
+
+.settings label {
+    display: block;
+    padding: 4px 0;
+}
+
+.lbl-column {
+    display: inline-block;
+    width: 50%;
+    text-align: right;
+}
+
+#totalRounds, #totalscores, #players-total, #cta-start {
+    width: 80px;
+    font-size: 1.2em;
+    box-sizing: border-box;
+    padding-left: 5px;
+    padding-right: 2px;
+}
+
+#cta-start {
+    margin: auto;
+}
+
+@media screen and (max-width: 712px) {
+    .content {
+        width: 100%;
+    }
+
+    .keyboard {
+        width: 40%;
+        float: left;
+    }
+
+    .viewport {
+        width: 59%;
+    }
+
+    .dbl, .trpl {
+        width: 100%;
+    }
+
+    .number, .be25, .be50, .miss, .del {
+        width: 50%;
+    }
+}
