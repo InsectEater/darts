@@ -13,6 +13,7 @@ $( document ).ready(function() {
         totalscores: 301,
         nullify: true,
         totalRounds: 10,
+        doublesEnd: true
     }
 
     var valid_null_results = [];
@@ -29,7 +30,7 @@ $( document ).ready(function() {
         if ('Reset' == $(this).html())
             game_reset();
         else
-            game_start(); //console.log($('.players .player').toArray());
+            game_start();
     });
 
     $('.be25').click(function(){
@@ -119,7 +120,7 @@ $( document ).ready(function() {
                 scores = 0;
                 remaining = settings.totalscores;
             }
-            var scoresObj = score_add_revert( scores, parseIntt(scoring[i].mult * scoring[i].val) );
+            var scoresObj = score_add_revert( scores, scoring[i] );
             scores = scoresObj.value;
             var nextValueIsNotX = typeof(scoring[i + 1]) == 'undefined' ? true : scoring[i + 1].val !== 'X';
             if (scoresObj.overridden && nextValueIsNotX) {
@@ -171,6 +172,8 @@ $( document ).ready(function() {
 
 
     function nullify_show_others(nullifyScores) {
+        if (!settings.nullify)
+            return;
         var scores = parseInt( $currentPlayer.find('.scores').text() );
         for (var j = 0; j < playersTotal; j++) {
             $nullingPlayer = $('#player' + j);
@@ -180,7 +183,7 @@ $( document ).ready(function() {
             }
             var nScores = parseInt( $nullingPlayer.find('.scores').text() );
             $nullingPlayer.find('.nullify').text( score_validate_positive( nScores - scores ) );
-            if (settings.nullify && nullifyScores && 0 == nScores - scores) {
+            if (nullifyScores && 0 == nScores - scores) {
                 $nullingPlayer.find('.scores').text(0);
                 $nullingPlayer.find('.remaining').text(settings.totalscores);
 
@@ -195,6 +198,9 @@ $( document ).ready(function() {
         playersTotal = $('#players-total').val();
         settings.totalscores = parseIntt( $('#totalscores').val() );
         settings.totalRounds = parseIntt( $('#totalRounds').val() );
+        settings.doublesEnd = $('#doublesEnd').prop('checked') ? true : false;
+        settings.nullify = $('#nullify').prop('checked') ? true : false;
+
         $('.players').html('');
         $player.find('.scores').html( '0' );
         $player.find('.remaining').html( settings.totalscores );
@@ -239,13 +245,33 @@ $( document ).ready(function() {
     function score_add_revert(scores, throww) {
         if ('X' == throww) {
             return {'value': scores, 'overridden': false};
-        }console.log(throww);
-        var s = scores + throww;
+        }
+        var scores_throwed = parseIntt(throww.mult * throww.val);
+        var s = scores + scores_throwed;
+        
+        if (s == settings.totalscores) { 
+            if ( throw_can_end_turn(throww) )
+                return {'value': s, 'overridden': false};
+            return {'value': s - scores_throwed, 'overridden': true};
+        }
+
+        if ( settings.doublesEnd && s == settings.totalscores - 1)
+            return {'value': s - scores_throwed, 'overridden': true};
+
         if (s > settings.totalscores) {
             s = 2*settings.totalscores - s;
             return {'value': s, 'overridden': true};
         }
         return {'value': s, 'overridden': false};
+    }
+
+    function throw_can_end_turn(throww) {
+        if (! settings.doublesEnd) return true;
+        if ( $.inArray(throww.val, [25, 50]) > -1)
+            return true;
+        if ( $.inArray(throww.mult, [2, 3]) > -1)
+            return true;
+        return false;
     }
 
     function score_get_text_value(element) {
