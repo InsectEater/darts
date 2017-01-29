@@ -1,0 +1,102 @@
+body {
+    font-size: 16px;
+    font-family: verdana, arial, sans-serif;
+    background-image: url('images/bgr.jpg');
+    background-repeat: repeat;
+}
+
+ul.games {
+    width: 80%;
+    max-width: 600px;
+    margin: auto;
+    list-style-type: none;
+    padding: 0;
+}
+
+li.game {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.tile {
+    height: 10em;
+    border: 1px solid #555;
+    background-color: rgba(24, 23, 51, 0.56);
+    margin: 1em 0;
+    position: relative;
+}
+
+.game .title {
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding-top: 1.4em;
+    padding-left: 20%;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 2em;
+    color: #f5e8e1;
+    font-weight: bold;
+}
+
+.tile:hover {
+    left: -2px ;
+    top: -2px;
+}
+
+.game .title:hover,
+.game .scores:hover
+ {
+    background-color: rgba(10, 9, 33, 0.77);
+}
+
+.game .scores {
+    box-sizing: border-box;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 0 2em;
+    height: 3em;
+    line-height: 3em;
+    text-align: center;
+    color: #f5e8e1;
+}
+
+.game:first-child .title {
+    background-image: url('images/arcade.png');
+    background-repeat: no-repeat;
+    background-size: 27%;
+
+}
+
+.game:nth-child(2) .title {
+    background-image: url('images/sport.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+
+}
+
+.game:nth-child(3) .title {
+    background-image: url('images/killer.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+
+}
+
+@media screen and (max-width: 620px) {
+    body {
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    ul.games {
+        width: 100%;
+    }
+}
+
