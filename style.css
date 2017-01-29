@@ -1,4 +1,9 @@
+html, body {
+    height: 100%;
+}
+
 body {
+    min-height:100%;
     font-size: 16px;
     font-family: verdana, arial, sans-serif;
     background-image: url('bgr.jpg');
@@ -15,6 +20,12 @@ body {
     position: relative;
 }
 
+.header {
+    padding-left: 32px;
+    background-repeat: no-repeat;
+    background-position: 2px 2px;
+    min-height: 28px;
+}
 
 .keyboard {
     display: flex;
@@ -135,6 +146,10 @@ body {
     float: left;
 }
 
+.player .name span {
+    display: none;
+}
+
 .player .name input {
     border: none;
     font-size: 1.2em;
@@ -217,7 +232,11 @@ body {
     text-align: right;
 }
 
-#totalRounds, #totalscores, #players-total, #cta-start {
+#totalRounds,
+#totalscores,
+#players-total,
+#scoresId,
+#cta-start {
     width: 80px;
     font-size: 1.2em;
     box-sizing: border-box;

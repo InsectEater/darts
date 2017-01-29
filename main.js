@@ -3,13 +3,14 @@ $( document ).ready(function() {
     var $currentPlayer = null;
     var $activePlayer = null;
     var gameInProgress = false;
-    var playersTotal = 2;
-    var scoresNeeded = 301;
     var currentPlayerNum = 0;
     var currentRound = 0;
     var scoring = [];
+    var scoresId = '';
+    var token = '';
     var multiplier = 1;
     var settings = {
+        playersTotal: 2,
         totalscores: 301,
         nullify: true,
         totalRounds: 10,
@@ -24,6 +25,22 @@ $( document ).ready(function() {
     }
     valid_null_results.push(25);
     valid_null_results.push(50);
+
+    if ( $('#sendOnline').prop('checked') )
+        get_scores_id();
+    
+    $('#sendOnline').change(function(){
+        if ( $(this).prop('checked') ) {
+            if ( '' == scoresId ) {
+                get_scores_id();
+            }
+            set_indicator('loading', 'Loading data...')
+        }
+        if ( ! $(this).prop('checked') ) {
+            set_indicator('disabled', '')
+        }
+    });
+    //$('#sendOnline').prop('checked') )
 
     $('#cta-start').click(function(){
         clear_multipliers();
@@ -95,7 +112,11 @@ $( document ).ready(function() {
 
 
     function render_scoring() {
-
+        $('.players .name').each(function() {
+            $(this).find('span').text(
+                $(this).find('input').val()
+            );
+        });
         for (var i = 0; i < scoring.length; i++) {
             set_player(i);
             if ($currentPlayer.hasClass('winner'))
@@ -103,7 +124,7 @@ $( document ).ready(function() {
 
             if (i % 3 == 2) {
                 var nextPlayerNum = currentPlayerNum + 1;
-                if (nextPlayerNum >= playersTotal) nextPlayerNum = 0;
+                if (nextPlayerNum >= settings.playersTotal) nextPlayerNum = 0;
                 var $nextPlayer = $( '#player' +nextPlayerNum );
                 if (!$nextPlayer.hasClass('winner')) {
                     $nextPlayer.find('.throw1').text('');
@@ -146,12 +167,12 @@ $( document ).ready(function() {
         }
 
         $('.players .player').removeClass('current');
-        currentRound = Math.floor(scoring.length/(3*playersTotal)) + 1;
+        currentRound = Math.floor(scoring.length/(3*settings.playersTotal)) + 1;
         if ( currentRound > settings.totalRounds  ) {
             gameInProgress = false;
             var maxScores = 0;
             var winnerIndex = 0;
-            for (i = 0; i < playersTotal; i++) {
+            for (i = 0; i < settings.playersTotal; i++) {
                 var $nextPlayer = $('#player' +  i);
                 var currentScores = parseInt( $nextPlayer.find('.scores').text() );
                 if (currentScores > maxScores) {
@@ -161,6 +182,7 @@ $( document ).ready(function() {
             }
             $nextPlayer = $('#player' +  winnerIndex);
             $nextPlayer.addClass('winner');
+            send_scores();
             return;
         }
 
@@ -168,6 +190,7 @@ $( document ).ready(function() {
         nullify_show_others()
         $currentPlayer.addClass('current');
         $('.rounds').html('Round '+ currentRound + '/' + settings.totalRounds);
+        send_scores();
     }
 
 
@@ -175,7 +198,7 @@ $( document ).ready(function() {
         if (!settings.nullify)
             return;
         var scores = parseInt( $currentPlayer.find('.scores').text() );
-        for (var j = 0; j < playersTotal; j++) {
+        for (var j = 0; j < settings.playersTotal; j++) {
             $nullingPlayer = $('#player' + j);
             if ( $nullingPlayer.attr('id') ==  $currentPlayer.attr('id') ) {
                 $nullingPlayer.find('.nullify').text('');
@@ -195,7 +218,7 @@ $( document ).ready(function() {
         $('#cta-start').html('Reset');
         $('.settings').slideUp(200);
         gameInProgress = true;
-        playersTotal = $('#players-total').val();
+        settings.playersTotal = $('#players-total').val();
         settings.totalscores = parseIntt( $('#totalscores').val() );
         settings.totalRounds = parseIntt( $('#totalRounds').val() );
         settings.doublesEnd = $('#doublesEnd').prop('checked') ? true : false;
@@ -204,7 +227,7 @@ $( document ).ready(function() {
         $('.players').html('');
         $player.find('.scores').html( '0' );
         $player.find('.remaining').html( settings.totalscores );
-        for (var i = 0; i < playersTotal; i++) {
+        for (var i = 0; i < settings.playersTotal; i++) {
             var $anotherPlayer = $player.clone();
             $anotherPlayer.attr('id', 'player' + i);
             $('.players').append( $anotherPlayer );
@@ -228,9 +251,9 @@ $( document ).ready(function() {
 
     function set_player(i) {
         if ( typeof('undefined') == i || null == i ) {
-            currentPlayerNum = Math.floor ( (scoring.length) / 3 ) % playersTotal;
+            currentPlayerNum = Math.floor ( (scoring.length) / 3 ) % settings.playersTotal;
         } else {
-            currentPlayerNum = Math.floor ( i / 3 ) % playersTotal;
+            currentPlayerNum = Math.floor ( i / 3 ) % settings.playersTotal;
         }
         $currentPlayer = $( '#player' + currentPlayerNum );
         /*if ( $currentPlayer.hasClass('winner') )
@@ -293,6 +316,79 @@ $( document ).ready(function() {
 
     $('#totalRounds').on('focus', function() { $(this).select(); });
     
-    $('.menu-toggle').on('click', function() { $('.settings').slideToggle(200); });
+    $('.menu-toggle').on('click', function(event) {
+        event.stopImmediatePropagation()
+        $('.settings').slideToggle(200); 
+    });
+
+    $('body').on('click', function() {
+        if ( $('.settings').is(':visible') )
+            $('.settings').slideUp(200);
+    });
+
+    function get_scores_id() {
+        set_indicator('loading', 'Loading data...');
+        var jqxhr = $.get( "scores.php?action=get&data=id",
+        function( response ) {
+            data = JSON.parse( response );
+            if ('OK' == data.status) {
+                scoresId = data.body.id;
+                token = data.body.token;
+                $('#scoresId').val( scoresId );
+                set_indicator('ok', data.msg);
+            } else {
+                set_indicator('error', data.msg);
+            }
+        })
+          .fail(function() {
+            set_indicator('error', 'Connection error');
+          })
+    }
+
+    function send_scores() {
+
+        if ( '' == scoresId ) return;
+        if ( ! $('#sendOnline').prop('checked') ) return;
+
+        var post = {
+            id    : scoresId,
+            token : token,
+            data  : $('.viewport').html()
+        };
+        set_indicator('loading', 'Loading response...');
+        var jqxhr = $.post( "scores.php?action=put", post,
+        function( response ) {
+            data = JSON.parse(response);
+            if ( 'OK' == data.status )
+                set_indicator( 'ok', 'Scores sent' );
+            else {
+                set_indicator( 'error', data.msg )
+                console.log(response);
+            }
+        })
+          .fail(function() {
+            set_indicator('error', 'Connection error')
+          }, 'json')
+
+    }
+
+    function set_indicator(state, message) {
+        $('.header').attr('title', message);
+        switch (state) {
+            case 'ok':
+                $('.header').css('background-image', "url('state_ok.png')" );
+                break;
+            case 'loading':
+                $('.header').css('background-image', "url('state_loading.png')" );
+                break;
+            case 'disabled':
+                $('.header').css('background-image', "none" );
+                break;
+            default:
+                $('.header').css('background-image', "url('state_error.png')" );
+                break;
+        }
+    }
+
 
 });
