@@ -248,7 +248,35 @@ body {
     margin: auto;
 }
 
-@media screen and (max-width: 712px) {
+@media screen and (min-width: 421px) and (max-width: 712px)  {
+    .player {
+        width: 33%;
+    }
+
+    .content {
+        width: 100%;
+    }
+
+    .keyboard {
+        width: 45%;
+        float: left;
+    }
+
+    .viewport {
+        width: 54%;
+    }
+
+    .player {
+        font-size: 11px;
+    }
+
+    .player .container {
+        min-height: 66px;
+    }
+}
+
+
+@media screen and (max-width: 420px) {
     .content {
         width: 100%;
     }

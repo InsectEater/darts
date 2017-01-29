@@ -1,7 +1,7 @@
 $( document ).ready(function() {
     var scoresId = '';
     
-    setInterval( get_scores, 5000 );
+    setInterval( get_scores, 4000 );
     get_scores();
 
     function get_scores() {
@@ -24,9 +24,6 @@ $( document ).ready(function() {
             set_indicator('error', 'Connection error');
           })
     }
-
-
-
 
     function set_indicator(state, message) {
         $('.header').attr('title', message);

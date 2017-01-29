@@ -321,6 +321,10 @@ $( document ).ready(function() {
         $('.settings').slideToggle(200); 
     });
 
+    $('.settings').on('click', function(event) {
+        event.stopImmediatePropagation()
+    });
+
     $('body').on('click', function() {
         if ( $('.settings').is(':visible') )
             $('.settings').slideUp(200);
