@@ -67,21 +67,21 @@ a {
     color: #f5e8e1;
 }
 
-.game:first-child .title {
+#arcade .title {
     background-image: url('images/arcade.png');
     background-repeat: no-repeat;
     background-size: 27%;
 
 }
 
-.game:nth-child(2) .title {
+#sport .title {
     background-image: url('images/sport.png');
     background-repeat: no-repeat;
     background-size: contain;
 
 }
 
-.game:nth-child(3) .title {
+#killers .title {
     background-image: url('images/killer.png');
     background-repeat: no-repeat;
     background-size: contain;
