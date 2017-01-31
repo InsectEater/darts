@@ -7,7 +7,7 @@ $( document ).ready(function() {
     function get_scores() {
         set_indicator('loading', 'Loading data...');
         var timeInMs = Date.now();
-        var jqxhr = $.get( "scores.php?action=get&data=" + $('#scoresId').val() + "&nocache=" + timeInMs,
+        var jqxhr = $.get( "scores.php?action=get&data=" + $('#scoresId').val() + "&game=arcade&nocache=" + timeInMs,
         function( response ) {
             data = JSON.parse( response );
             if ('OK' == data.status) {

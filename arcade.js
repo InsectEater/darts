@@ -357,6 +357,7 @@ $( document ).ready(function() {
         var post = {
             id    : scoresId,
             token : token,
+            game  : 'arcade',
             data  : $('.viewport').html()
         };
         set_indicator('loading', 'Loading response...');
