@@ -1,14 +1,20 @@
 $( document ).ready(function() {
-    var settings = {
-        playersTotal: 3,
-        totalLifes: 3,
-    }
+    generate_header();
     var $player = $('#defaults .player');
     var $currentPlayer = '';
     var scoring = [];
+    var gameInProgress = false;
 
-    game_start();
+    $('#cta-start').click(function(){
+        if ('Reset' == $(this).html())
+            game_reset();
+        else {
+            game_start();
+        }
+    });
 
+    $('#totalLives').on('focus', function() { $(this).select(); });
+    
     $('#del').click(function(){
         if ( 0 == scoring.length )
             return;
@@ -23,25 +29,28 @@ $( document ).ready(function() {
     });
 
     $('#killer').click(function(){
+        if (!gameInProgress) return;
+        if (!check_playersinfo_filled()) return;
         scoring.push( 'killer' );
         render_scores();
        
     });
 
     $('#miss').click(function(){
+        if (!gameInProgress) return;
+        if (!check_playersinfo_filled()) return;
         scoring.push( 'miss' );
         render_scores();
     });
 
-    $('.target').click(function(){
-        $targetPlayer = $(this).closest('.player');
-        scoring.push( $targetPlayer.attr('data-id') );
-        render_scores();
-    });
 
     function game_start() {
+        settings_hide();
+        settings_get();
+        $('#cta-start').html('Reset');
         $('.players').html('');
-        for (var i = 0; i < settings.playersTotal; i++) {
+        
+        for (var i = 0; i < game.playersTotal; i++) {
             var $anotherPlayer = $player.clone();
             $anotherPlayer.addClass('player' + i);
             $('.players').append( $anotherPlayer );
@@ -49,17 +58,52 @@ $( document ).ready(function() {
             $anotherPlayer.find('.name input').on('focus', function() { $(this).select(); });
         }
 
+        $('.target').click(function(){
+            $targetPlayer = $(this).closest('.player');
+            scoring.push( $targetPlayer.attr('data-id') );
+            render_scores();
+        });
+
         $('.players select').change(function() {
-            //var value = $(this).val();
             var $element = $(this);
             $('.players select' ).each(function(){
                 if ( $( this ).val() == $element.val() && !$( this ).is( $element ) )
                     $element.val( '' );
-                    console.log('changed');
             });
+            $( this ).closest('.player').find('.number span').text(  $( this ).val() );
+            $element.blur();
+            render_scores();
         });
 
+        $('.name input').change(function() {
+            $( this ).closest('.player').find('.name span').text(  $( this ).val() );
+            render_scores();
+        });
+        
+        gameInProgress = true;
         render_scores();
+    }
+
+    function check_playersinfo_filled() {
+        var empty = false;
+        //return true, if there is some select value which is empty
+        $('.players .number select').each(function() {
+                empty = ( empty || (! $(this).val()) );
+        });
+        if (empty) {
+            alert('All players must have numbers!')
+            return false;
+        }
+        return true;
+    }
+
+    function game_reset() {
+        if (!confirm('Are you sure?') )
+            return;
+        $('#cta-start').html('Start');
+        gameInProgress = false;
+        $('.players').html('');
+        scoring = [];
     }
 
     function render_scores() {
@@ -67,11 +111,18 @@ $( document ).ready(function() {
         $('.players .throw' ).removeClass('dart');
         $('.players .player' ).removeClass('killer');
         $('.players .player' ).removeClass('killed');
-        $('.players .player' ).attr('data-lifes', settings.totalLifes);
+        $('.players .player' ).attr('data-lives', game.totalLives);
         $('.players .player0').addClass('current');
         $('.players .player0 .throw' ).addClass('dart');
         $('.players .player .target').removeClass('active') ;
-        for (var i = 0; i < settings.playersTotal; i++) {
+
+        $('.players .name').each(function() {
+            $(this).find('span').text(
+                $(this).find('input').val()
+            );
+        });
+
+        for (var i = 0; i < game.playersTotal; i++) {
             set_player(3 * i);
             $currentPlayer.attr('data-id', i);
         }
@@ -79,23 +130,20 @@ $( document ).ready(function() {
         for (var i = 0; i < scoring.length; i++) {
             set_player(i);
 
-            /*if ($currentPlayer.hasClass('killed'))
-                continue;*/
-
             if ( !isNaN( parseInt( scoring[i] ) ) ) {
                 $targetPlayer = $('.players .player' + scoring[i] );
-                var lifes = $targetPlayer.attr('data-lifes');
+                var lifes = $targetPlayer.attr('data-lives');
                 lifes--;
                 if (0 >= lifes) {
                     lifes = 0;
                     $targetPlayer.addClass('killed');
                 }
-                $targetPlayer.attr('data-lifes', lifes);
+                $targetPlayer.attr('data-lives', lifes);
             }
             
             if (i % 3 == 2) {
                 var nextPlayerNum = currentPlayerNum + 1;
-                if (nextPlayerNum >= settings.playersTotal) nextPlayerNum = 0;
+                if (nextPlayerNum >= game.playersTotal) nextPlayerNum = 0;
                 var $nextPlayer = $( '.players .player' + nextPlayerNum );
                 $nextPlayer.find( '.throw' ).addClass('dart');
             }
@@ -122,7 +170,6 @@ $( document ).ready(function() {
         show_lifes();
 
         if ( $currentPlayer.hasClass('killed') ) {
-
                 if (scoring[i + 3] !== 'dead') {
                     scoring.push('dead');
                     scoring.push('dead');
@@ -130,14 +177,12 @@ $( document ).ready(function() {
                     render_scores();
                 }
         }
-
-        //console.log(scoring);
+        send_scores();
     }
-
 
     function show_lifes() {
         $('.players .player').each(function(){
-            var lifes = $( this ).attr( 'data-lifes' );
+            var lifes = $( this ).attr( 'data-lives' );
             $( this ).find('.lifes').html('');    
             for (var i = 1; i <= lifes; i++) {
                 $( this ).find('.lifes').append( '<span class="life">&nbsp;</span>' );
@@ -147,14 +192,10 @@ $( document ).ready(function() {
 
     function set_player(i) {
         if ( typeof('undefined') == i || null == i ) {
-            currentPlayerNum = Math.floor ( (scoring.length) / 3 ) % settings.playersTotal;
+            currentPlayerNum = Math.floor ( (scoring.length) / 3 ) % game.playersTotal;
         } else {
-            currentPlayerNum = Math.floor ( i / 3 ) % settings.playersTotal;
+            currentPlayerNum = Math.floor ( i / 3 ) % game.playersTotal;
         }
-        //console.log('currentPlayerNum: ' + currentPlayerNum);
         $currentPlayer = $( '.players .player' + currentPlayerNum );
-        //console.log($currentPlayer.attr('class'));
     }
-
-
 });

@@ -1,16 +1,59 @@
-body {
+.command-bar {
+    height: 3em;
     width: 100%;
-    padding: 1%;
-    margin: 0;
-    box-sizing: border-box;
-    font-size: 16px;
-    background-image: url('images/bgr.jpg');
-    background-repeat: repeat;
+    background-color: transparent;
+    position: fixed;
+    text-align: center;
+    z-index: 1;
 }
 
-#defaults {
-    display: none;
-    visibility: none;
+.content {
+    width: 100%;
+}
+
+.viewport {
+    margin: 3em auto 0 auto;
+    max-width: 1250px;
+}
+
+#del {
+    background-color: #922;
+}
+
+#del:hover {
+    background-color: #d22;
+    color: white;
+}
+
+#killer {
+    background-color: #000;
+}
+
+#killer:hover {
+    background-color: #333;
+    color: white;
+}
+
+#miss {
+    background-color: #292;
+}
+
+#miss:hover {
+    background-color: #2d2;
+    color: white;
+}
+
+.command {
+    width: 5em;
+    display: inline-block;
+    line-height: 1.5em;
+    text-align: center;
+    color: white;
+    font-size: 2em;
+    font-weight: bolder;
+    text-decoration: none;
+    margin-right: 0.5em;
+    color: #ddd
 }
 
 .killer .container {
@@ -41,15 +84,22 @@ body {
     padding: 0;
 }
 
+.current .number {
+    background-image: url('images/target_25.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 15% center;
+}
+
+.current.killer .number {
+    background-image: none;
+}
+
 .container {
     position: relative;
     box-sizing: border-box;
     border: 1px solid black;
     height: 100%;
-}
-
-.content {
-    position: relative;
 }
 
 .throws {
@@ -91,6 +141,9 @@ body {
     box-sizing: border-box;
 }
 
+.name span {
+    display: none;
+}
 
 .number {
     width: 85%;
@@ -104,6 +157,10 @@ body {
     font-size: 2em;
     background-color: transparent;
     border: none;
+}
+
+.number span {
+    display: none;
 }
 
 .lifes {
@@ -153,6 +210,28 @@ body {
 }
 
 
+
+.recieved-from-server .name input {
+    display: none;
+}
+
+.recieved-from-server .name span {
+    display: block;
+    text-align: center;
+    padding-top: 0.2em;
+    font-size: 1.3em;
+}
+
+.recieved-from-server .number select {
+    display: none;
+}
+
+.recieved-from-server .number span {
+    display: block;
+    text-align: center;
+    font-size: 2.5em;
+}
+
 @media (min-width: 1301px) {
     .players .player {
         height: 230px;
@@ -176,6 +255,10 @@ body {
 }
 
 @media (max-width: 720px) {
+    .command-bar {
+        font-size: 10px;
+    }
+
     .players .player {
         width: 33%;
         height: 150px;
@@ -191,6 +274,10 @@ body {
 }
 
 @media (max-width: 420px) {
+    .command-bar {
+        font-size: 8px;
+    }
+
     .players .player {
         width: 50%;
         height: 100px;
