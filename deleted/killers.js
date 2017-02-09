@@ -164,8 +164,7 @@ $( document ).ready(function() {
                         
         }
         if ( $currentPlayer.hasClass('killer')) {
-            //$('.players .player:not(.killer) .target').addClass('active') ;
-            $('.players .player .target').addClass('active') ;
+             $('.players .player:not(.killer) .target').addClass('active') ;
         }
         
         show_lifes();
@@ -178,23 +177,6 @@ $( document ).ready(function() {
                     render_scores();
                 }
         }
-
-
-        game.players = [];
-        $('.players .player').each(function(){
-            var player = {};
-            player.nm = $(this).find('.name input').val();
-            player.nb = $(this).find('.number select').val();
-            player.l = $( this ).attr( 'data-lives' );
-            player.d = $(this).find('.dart').length;
-            player.c = ( $( this ).hasClass( 'current' ) ) ? true : false;
-            player.k = ( $( this ).hasClass( 'killer' ) ) ? true : false;
-            player.kd = ( $( this ).hasClass( 'killed' ) ) ? true : false;
-            player.t = ( $( this ).find('.target').hasClass( 'active' ) ) ? true : false;
-
-            game.players.push(player);
-        });
-
         send_scores();
     }
 

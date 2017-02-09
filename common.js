@@ -24,7 +24,8 @@ $( document ).ready( function() {
 function generate_header() {
     var str = {};
     str.header = '<section class="header">';
-    str.header += '<a href="./index.html" title="home" id="home" title="Back to home page" class="button">&#x1f3e0;</a>';
+    str.header += '<a href="./index.html" id="home" title="Back to home page" class="button">&#x1f3e0;</a>';
+    str.header += '<a href="javascript:void(0);" title="Rules" id="manual" class="button">&#x1f4d6;</a>';
     str.header += '<h1></h1>';
     str.header += '<a class="button menu-toggle" href="javascript:void(0)" title="Menu" id="menu">&#9776;</a>';
     str.header += '<span class="network"></span>';
@@ -67,12 +68,22 @@ function generate_header() {
         $settings.append( str.network );
     }
 
-   if ( $('#sendOnline').prop('checked') )
+    if ( $('#sendOnline').prop('checked') )
         get_scores_id();
+    
+    $('#manual').on('click', function(event) {
+        $('.content').slideToggle(200);
+        $('.rules').slideToggle(200);
+    });
 
     $('.menu-toggle').on('click', function(event) {
-        event.stopImmediatePropagation()
-        $('.settings').slideToggle(200); 
+        event.stopImmediatePropagation();
+        $('.settings').slideToggle(200);
+    });
+
+    $('#cta-start').on('click', function(event) {
+        $('.rules').hide(200);
+        $('.content').show(200);
     });
 
     $('.settings').on('click', function(event) {
@@ -106,7 +117,7 @@ function generate_footer() {
     str.footer += '<span class="err-msg"></span>';
     str.footer += '</section>';
     str.footer = $.parseHTML( str.footer );
-    $( '.recieved-from-server' ).after( str.footer );
+    $( '.recieved-from-server' ).append( str.footer );
 }
 
  function settings_hide() {
@@ -161,20 +172,21 @@ function set_network(state, message) {
 function get_scores_id() {
     set_network('loading');
     var jqxhr = $.get( "scores.php?action=get&data=id",
-    function( response ) {
-        data = JSON.parse( response );
-        if ('OK' == data.status) {
-            game.scoresId = data.body.id;
-            game.token = data.body.token;
-            $('#scoresId').val( game.scoresId );
-            set_network('ok', data.msg);
-        } else {
-            set_network('error', data.msg);
-        }
-    })
+        function( response ) {
+            data = JSON.parse( response );
+            if ('OK' == data.status) {
+                game.scoresId = data.body.id;
+                game.token = data.body.token;
+                $('#scoresId').val( game.scoresId );
+                set_network('ok', data.msg);
+            } else {
+                set_network('error', data.msg);
+            }
+        })
       .fail(function() {
         set_network('error', 'Connection error');
       })
+
 }
 
 function send_scores() {
@@ -185,8 +197,10 @@ function send_scores() {
         id    : game.scoresId,
         token : game.token,
         game  : game.gameName,
-        data  : $('.send-to-server').html()
+        //data  : $('.send-to-server').html()
+        data  : JSON.stringify( game )
     };
+
     set_network('loading', 'Scores send, loading response...');
     var jqxhr = $.post( "scores.php?action=put", post,
     function( response ) {
@@ -207,24 +221,26 @@ function send_scores() {
 function get_scores() {
     set_network('loading', 'Loading data...');
     var timeInMs = Date.now();
+    game.scoresId = $('#scoresId').val();
     var jqxhr = $.get( "scores.php?action=get&data=" + game.scoresId + '&game=' + game.gameName + '&nocache=' + timeInMs,
     function( response ) {
         data = JSON.parse( response );
         if ('OK' == data.status) {
-            scoresId = data.body.id;
-            $('.viewport').html( data.body.content );
-            if ( is_empty( game.scoresId ) ) {
-                $('#scoresId').val( data.body.id );
-                game.scoresId = data.body.id;
+            game = JSON.parse(data.body.content);
+            //$('.viewport').html( data.body.content );
+            if ( is_empty(  $('#scoresId').val() ) ) {
+                $('.recieved-from-server #scoresId').val( game.scoresId );
             }
+            if (typeof fill_data == 'function')
+                fill_data();
             set_network('ok', data.msg);
         } else {
             set_network('error', data.msg);
         }
     })
-      .fail(function() {
-        set_network('error', 'Connection error');
-      })
+        .fail(function() {
+            set_network('error', 'Connection error');
+        })
 }
 
 function settings_get() {

@@ -164,7 +164,18 @@ section.reciever .err-msg {
     color: #a00;
 }
 
+.recieved-from-server .name input {
+    margin: 0;
+}
 
+.viewport {
+    margin: 3em auto 0 auto;
+    max-width: 1250px;
+}
+
+.recieved-from-server .viewport {
+    margin-top: 0;
+}
 
 @media (max-width: 420px) {
     .settings label span,
@@ -181,6 +192,21 @@ section.reciever .err-msg {
     body {
         font-size: 12px;
     }
+}
+
+.rules {
+    display:none;
+    position: absolute;
+    width: 100%;
+    top: 3em;
+    box-sizing: border-box;
+    padding: 1em;
+    text-indent: 1em;
+}
+
+.rules .unsupported {
+    color: #555;
+    text-decoration: line-through;
 }
 
 /* Common clases */

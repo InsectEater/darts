@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8" /> 
-    <title data-game-name="killers">Darts Killers scoreboard</title>
+    <title data-game-name="killers1">Darts Killers scoreboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="common.css" />
     <link rel="stylesheet" type="text/css" href="killers.css" />
@@ -10,13 +10,31 @@
     <script src="common.js" type="text/javascript"></script>
     <script src="killers_scores.js" type="text/javascript"></script>
 </head>
-<body>
-        <div class="viewport recieved-from-server">
+<body class="recieved-from-server">
+    <div class="viewport">
+        <div class="players">
         </div>
-        <!-- <div class="network">
-            Syncronize ID:
-            <input type="text" id="scoresId" />
-            <span class="err-msg"></span>
-        </div> -->
+    </div>
+
+    <div id="defaults">
+        <div class="player">
+            <div class="container">
+                <div class="throws">
+                </div>
+                <div class="name">
+                    <input type="text" />
+                    <span></span>
+                </div>
+                <div class="scores-container">
+                    <div class="number">
+                        <span></span>
+                    </div>
+                    <div class="lifes">
+                    </div>
+                </div>   
+            </div>
+            <div class="target"> &nbsp;</div>
+        </div>
+    </div>
 </body>
 </html>

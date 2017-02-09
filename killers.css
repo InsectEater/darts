@@ -11,11 +11,6 @@
     width: 100%;
 }
 
-.viewport {
-    margin: 3em auto 0 auto;
-    max-width: 1250px;
-}
-
 #del {
     background-color: #922;
 }
@@ -65,7 +60,9 @@
 }
 
 .killed input,
-.killed select {
+.killed select,
+.killed .number span,
+.killed .name span {
     text-decoration: line-through;
 }
 
@@ -230,6 +227,10 @@
     display: block;
     text-align: center;
     font-size: 2.5em;
+}
+
+.recieved-from-server .throw.dart{
+    display: block;
 }
 
 @media (min-width: 1301px) {
