@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8" /> 
+    <title>Tic Tac Toe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="common.css" />
+    <link rel="stylesheet" type="text/css" href="tictactoe.css" />
+    <script src="jquery-3.1.1.min.js"type="text/javascript"></script>
+    <script src="common.js" type="text/javascript"></script>
+    <script src="tictactoe.js" type="text/javascript"></script>
+</head>
+<body>
+
+    <div class="settings" data-game-name="tictactoe" data-playerstotal="no">
+    </div>
+
+    <div class="content">
+        <div class="keyboard">
+            <div class="btn">12</div><div class="btn">D12</div><div class="btn">T12</div>
+            <div class="btn">20</div><div class="btn">D20</div><div class="btn">T20</div>
+            <div class="btn">18</div><div class="btn">D18</div><div class="btn">T18</div><br />
+            <div class="btn">11</div><div class="btn">D11</div><div class="btn">T11</div>
+            <div class="btn">B</div><div class="btn">Miss</div><div class="btn" id="del">&lt;&lt;</div>
+            <div class="btn">6</div><div class="btn">D6</div><div class="btn">T6</div><br />
+            <div class="btn">7</div><div class="btn">D7</div><div class="btn">T7</div>
+            <div class="btn">3</div><div class="btn">D3</div><div class="btn">T3</div>
+            <div class="btn">2</div><div class="btn">D2</div><div class="btn">T2</div>
+        </div>
+        <div class="boards">
+            <div class="board small player0 active">
+                <input type="text" name="player0" id="player0" class="playername" />
+                <div class="player-sign sign-x" data-player="player0" id="player0_sign" title="Click to switch player's sign"> </div>
+                <table border="1">
+                <tr> <td>12</td> <td>20</td>  <td>18</td> </tr>
+                <tr> <td>11</td> <td>B</td>   <td>6</td> </tr>
+                <tr> <td>7</td>  <td>3</td>   <td>2</td> </tr>
+                </table>
+                <div class="throws"></div>
+            </div>
+            
+            <div class="board small player1">
+                <input type="text" name="player1" id="player1" class="playername" />
+                <div class="player-sign sign-o" data-player="player1" id="player1_sign" title="Click to switch player's sign"> </div>
+                <table border="1">
+                <tr> <td>12</td> <td>20</td>  <td>18</td> </tr>
+                <tr> <td>11</td> <td>B</td>   <td>6</td> </tr>
+                <tr> <td>7</td>  <td>3</td>   <td>2</td> </tr>
+                </table>
+                <div class="throws"></div>
+            </div>
+
+            <div class="board big">
+                <table border="1">
+                <tr> <td>12</td> <td>20</td>  <td>18</td> </tr>
+                <tr> <td>11</td> <td>B</td>   <td>6</td> </tr>
+                <tr> <td>7</td>  <td>3</td>   <td>2</td> </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="send-to-server viewport">
+            
+        </div>
+        
+    </div>
+
+    <div class="rules">
+        <p>Tic-Tac-Toe: Tic-Tac-Toe is a fun simple game for 2 players or teams. It combines the standard rules of the pen-and-paper game with darts.</p>
+        <p>The Object: Getting a tic-tac-toe just like the regular game by having three X's or O's in a row horizontally, vertically or diagonally.</p>
+        <p>The Scoring: Three tic-tac-toe boards are drawn on the scoreboard, 1 small one in each of the two player/team's columns and one larger one in the center. The small ones are used to mark what each player hits and the big one is used for the actual tic-tac-toe game.</p>
+        <p>The numbers that are used for the game appear on the dart board with similar placement to the tic-tac-toe box they represent (B means bullseye):</p>
+        <style>
+            td {
+                text-align: center;
+                padding: 0.3em;
+            }
+        </style>
+        <table border="1">
+        <tr> <td>12</td> <td>20</td>  <td>18</td></tr>
+        <tr> <td>11</td> <td>B</td>   <td>6</td></tr>
+        <tr> <td>7</td>  <td>3</td>   <td>2</td></tr>
+        </table>
+
+        <p>In order to place an X or an O in the big game board, a player must "close" the number first in the small game board. To close a number, three of that number must be scored with the thin outer ring counting as two of that number (called a "double") and the thin inner ring counting as three (called a triple). A score of one is indicated with a slash ("/"). A score of two is indicated with an X. And a score of three is indicated with a circle to show it is "closed".</p>
+        <p>For example, a player hits a single 18, a double 18 and a single 7. In his small board, he would place a circle in the upper left hand box to show he closed 18 and a slash in the lower left hand box to indicate the single 7. Now because he closed 18 first, he claims the upper left hand corner of the big game board by placing his X or O in that box. 18's now no longer count for the other player.</p>
+        <p>The Play: Players throw one dart each at bullseye, closest dart throws first and that player's name is written above the left small board with the other player's name written above the right small board. This player also chooses to be X's or O's and writes that near the small board too.
+        The first player will try to close the numbers that count as quickly as possible to place an X or O where desired.</p>
+        <p>Players alternate until someone wins a tic-tac-toe or the game is a draw.</p>
+        <p>Strategy: If you do not know the strategy to tic-tac-toe, you should seek professional help.</p>
+    </div>
+        
+    <div id="defaultss">
+
+    </div>
+
+</body>
+</html>

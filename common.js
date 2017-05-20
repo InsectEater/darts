@@ -4,7 +4,7 @@ var game = {};
     Call generate_footer() if you are on view scores page.
 
     ========================================================================
-    possible settings in data-settingname attributes for .settings container
+    possible settings in data-settingname attributes for div.settings container
     ========================================================================
         data-playerstotal        : yes|no   - default: yes
         data-default-players-num : integer  - default: 3
@@ -15,6 +15,9 @@ var game = {};
     on game start use functions:
         settings_get() to import data into game variable
         settings_hide() to hide settings panel
+
+    use game object to store and send global data to view scores page.Try to keep this object as
+    minimal as you can
 */
 
 $( document ).ready( function() {

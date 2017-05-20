@@ -1,4 +1,0 @@
-[29-Jan-2017 01:57:25 CST6CDT] PHP Fatal error:  Call to a member function bindValue() on boolean in /home/infosph/public_html/tools/darts/scores.php on line 62
-[06-Feb-2017 11:16:38 CST6CDT] PHP Fatal error:  Call to a member function bindValue() on boolean in /home/infosph/public_html/tools/darts/scores.php on line 121
-[06-Feb-2017 11:16:52 CST6CDT] PHP Fatal error:  Call to a member function bindValue() on boolean in /home/infosph/public_html/tools/darts/scores.php on line 63
-[06-Feb-2017 11:19:24 CST6CDT] PHP Fatal error:  Call to a member function bindValue() on boolean in /home/infosph/public_html/tools/darts/scores.php on line 121

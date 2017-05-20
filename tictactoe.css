@@ -1,0 +1,115 @@
+.content {
+	width: 100%;
+}
+
+.boards {
+	position: relative;
+	overflow: hidden;
+	top: -75px;
+	z-index: 5;
+}
+
+.playername {
+	box-sizing: border-box;
+	width: 100%;
+	font-size: 1em;
+	text-align: center;
+	border: none;
+	background-color: transparent;
+}
+
+.board.small {
+	position: absolute;
+	top: 15px;
+	font-size: 2em;
+	width: 205px;
+}
+
+.board.player0 {
+	left: 15px;
+}
+
+.board.player1 {
+	right: 15px;	
+}
+
+.player0 table {
+	float: left;
+}
+
+.active table {
+	background-color: rgba(255, 255, 0, 0.3);
+}
+
+.player1 table {
+	float: right;
+}
+
+.board.big {
+	margin: auto;
+	margin-top: 100px;
+	text-align: center;
+}
+
+.board td {
+	padding: 0.4em;
+}
+
+.board.big table {
+	margin: auto;
+	font-size: 3em;
+}
+
+.player-sign {
+	background-repeat: no-repeat;
+	background-size: cover;
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	top: -5px;
+	cursor: pointer;
+}
+
+.player0 .player-sign {
+	right: -55px;
+}
+
+.player1 .player-sign {
+	left: -55px;
+}
+
+.sign-x {
+	background-image: url('images/ttt_cross_blue.png');
+}
+
+.sign-o {
+	background-image: url('images/ttt_circle_red.png');	
+}
+
+.keyboard {
+	width: calc( 53px * 9);
+	box-sizing: border-box;
+	background-color: white;
+	display: flex;
+	flex-wrap: wrap;
+	margin: 5px auto 0 auto;
+	position: relative;
+	z-index: 10;
+}
+.keyboard .btn {
+	width: 45px;
+	text-align: center;
+	padding: 4px 2px;
+	margin: 2px;
+	display: inline-block;
+	background-color: #93c993;
+	cursor: pointer;
+}
+
+.keyboard .btn:hover {
+	background-color: #73a973
+}
+
+#del {
+	background-color: #c49090;
+}
