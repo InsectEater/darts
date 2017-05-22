@@ -17,15 +17,33 @@
 
     <div class="content">
         <div class="keyboard">
-            <div class="btn">12</div><div class="btn">D12</div><div class="btn">T12</div>
-            <div class="btn">20</div><div class="btn">D20</div><div class="btn">T20</div>
-            <div class="btn">18</div><div class="btn">D18</div><div class="btn">T18</div><br />
-            <div class="btn">11</div><div class="btn">D11</div><div class="btn">T11</div>
-            <div class="btn">B</div><div class="btn">Miss</div><div class="btn" id="del">&lt;&lt;</div>
-            <div class="btn">6</div><div class="btn">D6</div><div class="btn">T6</div><br />
-            <div class="btn">7</div><div class="btn">D7</div><div class="btn">T7</div>
-            <div class="btn">3</div><div class="btn">D3</div><div class="btn">T3</div>
-            <div class="btn">2</div><div class="btn">D2</div><div class="btn">T2</div>
+            <div class="btn" data-x='1' data-pos='0'>12</div>
+            <div class="btn" data-x='2' data-pos='0'>D12</div>
+            <div class="btn" data-x='3' data-pos='0'>T12</div>
+            <div class="btn" data-x='1' data-pos='1'>20</div>
+            <div class="btn" data-x='2' data-pos='1'>D20</div>
+            <div class="btn" data-x='3' data-pos='1'>T20</div>
+            <div class="btn" data-x='1' data-pos='2'>18</div>
+            <div class="btn" data-x='2' data-pos='2'>D18</div>
+            <div class="btn" data-x='3' data-pos='2'>T18</div><br />
+            <div class="btn" data-x='1' data-pos='3'>11</div>
+            <div class="btn" data-x='2' data-pos='3'>D11</div>
+            <div class="btn" data-x='3' data-pos='3'>T11</div>
+            <div class="btn" data-x='1' data-pos='4'>B</div>
+            <div class="btn" data-x='1' data-pos='0'>Miss</div>
+            <div class="btn" id="del">&lt;&lt;</div>
+            <div class="btn" data-x='1' data-pos='5'>6</div>
+            <div class="btn" data-x='2' data-pos='5'>D6</div>
+            <div class="btn" data-x='3' data-pos='5'>T6</div><br />
+            <div class="btn" data-x='1' data-pos='6'>7</div>
+            <div class="btn" data-x='2' data-pos='6'>D7</div>
+            <div class="btn" data-x='3' data-pos='6'>T7</div>
+            <div class="btn" data-x='1' data-pos='7'>3</div>
+            <div class="btn" data-x='2' data-pos='7'>D3</div>
+            <div class="btn" data-x='3' data-pos='7'>T3</div>
+            <div class="btn" data-x='1' data-pos='8'>2</div>
+            <div class="btn" data-x='2' data-pos='8'>D2</div>
+            <div class="btn" data-x='3' data-pos='8'>T2</div>
         </div>
         <div class="boards">
             <div class="board small player0 active">
@@ -36,7 +54,11 @@
                 <tr> <td>11</td> <td>B</td>   <td>6</td> </tr>
                 <tr> <td>7</td>  <td>3</td>   <td>2</td> </tr>
                 </table>
-                <div class="throws"></div>
+                <div class="throws">
+                    <span class="throw tr0"> </span>
+                    <span class="throw tr1"> </span>
+                    <span class="throw tr2"> </span>
+                </div>
             </div>
             
             <div class="board small player1">
@@ -47,7 +69,11 @@
                 <tr> <td>11</td> <td>B</td>   <td>6</td> </tr>
                 <tr> <td>7</td>  <td>3</td>   <td>2</td> </tr>
                 </table>
-                <div class="throws"></div>
+                <div class="throws">
+                    <span class="throw tr0">2 </span>
+                    <span class="throw tr1"> 2 </span>
+                    <span class="throw tr2"> 4 </span>
+                </div>
             </div>
 
             <div class="board big">

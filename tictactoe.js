@@ -7,13 +7,16 @@ $( document ).ready(function() {
         player0 : {
             name: 'Player 1',
             sign: 'x',
-            throws: []
+            throws: [],
+            board: [0, 0, 0, 0, 0, 0, 0, 0, 0]
         },
         player1 : {
             name: 'Player 2',
             sign: 'o',
-            throws: []
-        }
+            throws: [],
+            board: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+        },
+        board: []
     };
 
     $('#cta-start').click(function(){
@@ -24,13 +27,6 @@ $( document ).ready(function() {
         }
     });
     
-    $('#del').click(function(){
-        if ( 0 == scoring.length )
-            return;
-        scoring.pop().val;
-        render_scores();
-    });
-
     function game_start() {
         settings_hide();
         settings_get();
@@ -75,30 +71,34 @@ $( document ).ready(function() {
         $( '.board.' + game.activePlayer).addClass( 'active' );
 
         //Get players last throws
-        $('.throws').html('');
         var last_round = Math.floor( scoring.length / 3 );
-        $('.throws').html('');
+        $('.throws .throw').html('&nbsp;');
         game.players[game.activePlayer].throws = scoring.slice( last_round * 3, last_round * 3 + 3);
         if ( 0 < last_round ) {
             last_round--;
             //throws = scoring.slice( last_round * 3, last_round * 3 + 3);
             game.players[game.otherPlayer].throws = scoring.slice( last_round * 3, last_round * 3 + 3);
         }
-        //console.log(game.players['player0']);
         //Show players throws
-        var throws = game.players['player0'].throws.map( function( value ) {
-            return ' ' + value + ' ';
-        });
-        $( '.player0 .throws' ).html( throws );
 
-        var throws = game.players['player1'].throws.map( function( value ) {
-            return ' ' + value + ' ';
-        });
-        $( '.player1 .throws' ).html( throws );
+        for (var i = 0; i <3; i++) {
+            var throww = game.players['player0'].throws[i];
+            throww = throww ? throww.val : '&nbsp;';
+            $( '.player0 .throws .tr' + i ).html( throww  );
+            throww = game.players['player1'].throws[i];
+            throww = throww ? throww.val : '&nbsp;';
+            $( '.player1 .throws .tr' + i ).html( throww  );
+        }
+        
+        //SHow players boards
+        set_players_boards();
+        render_player_board( 'player0' );
+        render_player_board( 'player1' );
 
         //send_scores();
     }
 
+    //Choose player's sign
     $('.player-sign').click(function() {
         var playerId = $(this).attr( 'data-player' );
         player = game.players[playerId];
@@ -119,10 +119,45 @@ $( document ).ready(function() {
     });
 
     $('.btn').on('click', function() {
-        scoring.push( $(this).html() );
+        if ( 'del' == $( this ).attr( "id" ) ) {
+            scoring.pop();
+        } else {
+            scoring.push( {
+                'val': $( this ).html(),
+                'pos': $( this ).attr('data-pos'),
+                'x'  : $( this ).attr('data-x')
+            } );
+        }
         render_scores();
     });
 
+    function set_players_boards() {
+        $( '.board.small table td' ).removeClass();
+        game.players.player0.board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+        game.players.player1.board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+        game.board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+        scoring.map( function( throww, index) {
+            var cP = Math.floor( ( index / 3 ) % 2 ) ;
+            var oP =  cP ? 0 : 1;
+            var cPP = game.players['player' + cP];
+            var oPP = game.players['player' + oP];
+            if ( 3 > oPP.board[throww.pos] ) {
+                cPP.board[throww.pos] += parseInt( throww.x );
+                cPP.board[throww.pos] = ( 3 > cPP.board[throww.pos] ) ? cPP.board[throww.pos] : 3;
+                if ( cPP.board[throww.pos] >= 3 ) {
+                    game.board[throww.pos] = cP + 1;
+                }
+            }
+        } );
+    }
+
+    function render_player_board( player_name ) {
+
+        $( '.' + player_name + ' table td').each( function( index, td ) {
+            $( this ).removeClass();
+            $( this ).addClass( 'check-' + game.players[player_name].board[index] );
+        } );
+    }
 
     render_scores();
 
