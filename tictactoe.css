@@ -183,7 +183,7 @@
 	}
 
 	.throw {
-		font-size: 0.3em;
+		font-size: 0.35em;
 	}
 
 	.keyboard {
@@ -204,12 +204,21 @@
 	}
 }
 
-@media (max-width: 420px) {
+@media (max-width: 424px) {
 	.player0 .player-sign {
 		right: -30px;
 	}
 
 	.player1 .player-sign {
 		left: -30px;
+	}
+	
+	.throws {
+		font-size: 20px;
+	}
+
+	.throw {
+		width: 55%;
+		font-size: 12px;
 	}
 }

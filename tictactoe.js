@@ -87,8 +87,8 @@ $( document ).ready(function() {
             //throws = scoring.slice( last_round * 3, last_round * 3 + 3);
             game.players[game.otherPlayer].throws = scoring.slice( last_round * 3, last_round * 3 + 3);
         }
-        //Show players throws
 
+        //Show players throws
         for (var i = 0; i <3; i++) {
             var throww = game.players['player0'].throws[i];
             throww = throww ? throww.val : '&nbsp;';
@@ -104,17 +104,15 @@ $( document ).ready(function() {
         render_player_board( 'player1' );
 
         //Show big board
-
         $('.board.big td').each( function( index, td ) { 
             $( this ).removeClass();
             if ( game.board[index] ) {
                 player = 'player' + ( game.board[index] - 1 );
-                //console.log( game.players[player].sign );
                 $( this ).addClass( 'sign-' + game.players[player].sign );
             }
         } );
-
-        //send_scores();
+    
+        send_scores();
     }
 
     //Choose player's sign
