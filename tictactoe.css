@@ -25,6 +25,11 @@
 	width: 205px;
 }
 
+.board td {
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
 .board.player0 {
 	left: 15px;
 }
@@ -102,13 +107,25 @@
 	text-align: center;
 	padding: 4px 2px;
 	margin: 2px;
+	background-color: #73a973;
 	display: inline-block;
-	background-color: #93c993;
 	cursor: pointer;
 }
 
 .keyboard .btn:hover {
 	background-color: #73a973
+}
+
+.btn.single {
+	background-color: #93c993;
+}
+
+.btn.double {
+	background-color: #76a976;
+}
+
+.btn.triple {
+	background-color: #588a58;
 }
 
 #del {
@@ -127,4 +144,72 @@
 	border: 1px solid gray;
 	padding: 1px 3px;
 	text-align: center;
+}
+
+.check-1 {
+	background-image: url('images/board_small_1.png');
+}
+
+.check-2 {
+	background-image: url('images/board_small_2.png');
+}
+
+.check-3 {
+	background-image: url('images/board_small_3.png');
+}
+
+@media (max-width: 1023px) {
+	.boards {
+		top: 0;
+		font-size: 0.9em;
+	}
+}
+
+@media (max-width: 767px) {
+	.board.big {
+		font-size: 0.5em;
+	}
+
+	.board.small {
+		width: 101px;
+	}
+
+	.playername {
+		font-size: 0.6em;
+	}
+
+	.board.small table {
+		font-size: 0.5em;
+	}
+
+	.throw {
+		font-size: 0.3em;
+	}
+
+	.keyboard {
+		font-size: 0.8em;
+		width: calc( 53px * 6);
+	}
+	
+	.keyboard.btn {
+		width: 35px;
+	}
+
+	.player0 .player-sign {
+		right: -45px;
+	}
+
+	.player1 .player-sign {
+		left: -45px;
+	}
+}
+
+@media (max-width: 420px) {
+	.player0 .player-sign {
+		right: -30px;
+	}
+
+	.player1 .player-sign {
+		left: -30px;
+	}
 }

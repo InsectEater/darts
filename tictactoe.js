@@ -3,21 +3,24 @@ $( document ).ready(function() {
     var scoring = [];
     var gameInProgress = false;
 
-    game.players = {
-        player0 : {
-            name: 'Player 1',
-            sign: 'x',
-            throws: [],
-            board: [0, 0, 0, 0, 0, 0, 0, 0, 0]
-        },
-        player1 : {
-            name: 'Player 2',
-            sign: 'o',
-            throws: [],
-            board: [0, 0, 0, 0, 0, 0, 0, 0, 0]
-        },
-        board: []
-    };
+    function init_data() {
+        game.players = {
+            player0 : {
+                name: 'Player 1',
+                sign: 'x',
+                throws: [],
+                board: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            player1 : {
+                name: 'Player 2',
+                sign: 'o',
+                throws: [],
+                board: [0, 0, 0, 0, 0, 0, 0, 0, 0]
+            },
+            board: []
+        };
+        scoring = [];
+    }
 
     $('#cta-start').click(function(){
         if ('Reset' == $(this).html())
@@ -32,6 +35,7 @@ $( document ).ready(function() {
         settings_get();
         $('#cta-start').html('Reset');
         gameInProgress = true;
+        init_data();
         render_scores();
     }
 
@@ -39,11 +43,15 @@ $( document ).ready(function() {
         if (!confirm('Are you sure?') )
             return;
         $('#cta-start').html('Start');
+        init_data();
+        render_scores();
         gameInProgress = false;
-        scoring = [];
     }
 
     function render_scores() {
+        if ( ! gameInProgress ) {
+            return false;
+        }
         if ( Math.floor( scoring.length / 3 ) % 2 ) {
             game.activePlayer = 'player1';
             game.otherPlayer = 'player0';
@@ -95,6 +103,17 @@ $( document ).ready(function() {
         render_player_board( 'player0' );
         render_player_board( 'player1' );
 
+        //Show big board
+
+        $('.board.big td').each( function( index, td ) { 
+            $( this ).removeClass();
+            if ( game.board[index] ) {
+                player = 'player' + ( game.board[index] - 1 );
+                //console.log( game.players[player].sign );
+                $( this ).addClass( 'sign-' + game.players[player].sign );
+            }
+        } );
+
         //send_scores();
     }
 
@@ -137,6 +156,10 @@ $( document ).ready(function() {
         game.players.player1.board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
         game.board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
         scoring.map( function( throww, index) {
+            
+            if (  'Miss' == throww.val ) {
+                return;
+            }
             var cP = Math.floor( ( index / 3 ) % 2 ) ;
             var oP =  cP ? 0 : 1;
             var cPP = game.players['player' + cP];
@@ -158,7 +181,8 @@ $( document ).ready(function() {
             $( this ).addClass( 'check-' + game.players[player_name].board[index] );
         } );
     }
-
+    gameInProgress = true;
+    init_data();
     render_scores();
-
+    gameInProgress = false;
 });
