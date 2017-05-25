@@ -88,6 +88,13 @@ a {
 
 }
 
+#tictactoe .title {
+    background-image: url('images/tictactoe.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+
+}
+
 @media screen and (max-width: 620px) {
     body {
         font-size: 10px;
