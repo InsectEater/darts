@@ -1,0 +1,49 @@
+.command-bar {
+	height: 3em;
+	width: 100%;
+	background-color: transparent;
+	position: fixed;
+	text-align: center;
+	z-index: 1;
+}
+
+.content {
+	width: 100%;
+}
+
+.btn {
+	width: 45px;
+	text-align: center;
+	padding: 4px 2px;
+	margin: 2px;
+	background-color: #93c993;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.btn:hover {
+	background-color: #73a973;
+}
+
+.current-round {
+	width: 50px;
+	text-align: center;
+	vertical-align: middle;
+	padding: 2px 2px;
+	margin: 2px;
+	display: inline-block;
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
+#del {
+	background-color: #922;
+}
+
+#del:hover {
+	background-color: #d22;
+	color: white;
+}
+
+
+	
