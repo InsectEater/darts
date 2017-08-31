@@ -12,20 +12,20 @@
 </head>
 <body>
 
-	<div class="settings" data-game-name="shanghai">
+	<div class="settings" data-game-name="shanghai" data-min-players-num="2" data-default-players-num="2">
 	</div>
 
 	<div class="content">
 		<div class="command-bar clearfix">
-			<div class="current-round">20</div>
+			<div class="current-round">1</div>
+			<div class="btn" id="miss">Miss</div>
 			<div class="btn" id="single" title="Single">S</div>
 			<div class="btn" id="double" title="Double">D</div>
 			<div class="btn" id="tripple" title="Triple">T</div>
-			<div class="btn" id="miss">Miss</div>
 			<div class="btn" id="del">&lt;&lt;</div>
 		</div>
 
-		<table id="scores"></table>
+		<table id="scores" class="clearfix"></table>
 	 
 		<div class="send-to-server viewport">
 			<div class="players">
@@ -35,11 +35,17 @@
 	</div>
 
 	<div class="rules">
-		Shanghai rules
+		<p>Shanghai rules</p>
+
+		<p>Shanghai: This is a fun and easy game to learn and is good practice because it covers the whole board. It may be played by any number of people or teams.
+		<p>The Object: Try to score as many points as possible in 20 innings or "Shanghai" your opponent.</p>
+		<p>The Scoring: Each player throws one dart at bullseye, closest to the bullseye goes first. The names of the players are written in order across the top of the scoreboard and the numbers 1 through 20 are written down the left side of the board. Vertical lines are drawn to divide the scoreboard into columns, one for each player.</p>
+		<p>The Play: Each player takes a turn throwing three darts to score the highest score possible in that round. Only the wedge that is the same number as the round counts towards the score. For example, only 1's count in the first round, 2's in the second, etc. The thin outer "doubles" ring counts as twice the number scored and the thin inner "triples" ring counts as three times. After all twenty rounds have been completed whoever has the highest score wins.</p>
+		<p>The second way to win is to "Shanghai" your opponent. To Shanghai, you must hit one dart in the single, one in the triple and one in the double of the target number in any order. If you succeed in hitting a Shanghai, the game is over and you win regardless of the other player(s) score.</p>
+		<p>Strategy: If you hit a double or a triple with the first dart, always try for the Shanghai. If you miss it, you will still have a decent score and if you do get it, you win.</p>
 	</div>
 		
 	<div id="defaults">
-	   
 	</div>
 
 </body>

@@ -1,28 +1,98 @@
 $( document ).ready(function() {
 	generate_header();
-
-	game.players = [0, 2, 3];
+	game_reset();
 	
-	$('#cta-start').click(function(){
-		if ('Reset' == $(this).html())
+	$('#cta-start').click( function() {
+		if ('Reset' == $(this).html()) {
+			$(this).html('Start');
 			game_reset();
-		else {
+		} else {
+			$(this).html('Reset')
 			game_start();
 		}
 	});
 
+	function game_reset() {
+		game.players = [];
+		game.scores = [];
+		game.currentRound = 1;
+		game.inProgress = false;
+		$('.current-round').html('1');
+	}
+
 	function game_start() {
 		settings_hide();
 		settings_get();
+		game.inProgress = true;
 		$('#scores').html('');
-		for ( var i = 0; i <= game.playersTotal; i++ ) {
-			for ( var j = 1; j <= 20; j++ ) {
+		var table_header = '';
+		table_header += '<tr class="scores-header"><th>Round</th>';
+		for ( var i = 0; i < game.playersTotal; i++ ) {
+			table_header += '<th>';
+			table_header += '<input type="text" name="player' + i + '" />';
+			table_header += '<div class="player-scores player-scores' + i + '" />0</div>';
+			table_header += '</th>'; 
+		}
+		table_header += '</tr>';
+		$('#scores').html(table_header);
+		render_scores();
+	}
 
+	$('#del').click( function() {
+		if ( 'Start' == $('#cta-start').html() ) return;
+		game.inProgress = true;
+		game.scores.pop();
+		render_scores();
+	});
+
+	$('#miss').click( function() {
+		if ( ! game.inProgress ) return;
+		game.scores.push( '0' );
+		render_scores();
+	});
+
+	$('#single').click( function() {
+		if ( ! game.inProgress ) return;
+		game.scores.push( '1' );
+		render_scores();
+	});
+
+	$('#double').click( function() {
+		if ( ! game.inProgress ) return;
+		game.scores.push( '2' );
+		render_scores();
+	});
+
+	$('#tripple').click( function() {
+		if ( ! game.inProgress ) return;
+		game.scores.push( '3' );
+		render_scores();
+	});
+
+	function render_scores() {
+		game.currentRound = Math.floor( game.scores.length / ( 3 * game.playersTotal) ) + 1;
+		$('.current-round').html(game.currentRound);
+		var row = '';
+		$('.score-row').remove();
+		for ( var i = game.currentRound; i >= 1; i-- ) {
+			row = '<tr class="score-row row' + i + '"><td>';
+			row += i;
+			row += '</td>';
+			for ( var p = 1; p <= game.playersTotal; p++ ) {
+				row += '<td class="cell-' + i + '-' + p + '">0</td>';
 			}
+			row += '</tr>';
+			$('#scores').append(row);
+		}
+
+		game.scores.map( function (value, index){
+
+		});
+
+		if ( 20 <= game.currentRound ) {
+			game.inProgress = false;
 		}
 	}
-	
-
 
 
 

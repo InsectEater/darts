@@ -61,7 +61,8 @@ function generate_header() {
         );
         var players_total =
             '<label><span class="lbl-column">Players:</span> ' +
-            generate_playerstotal_select() +
+            //generate_playerstotal_select() +
+            players_total_select + 
             '</label>';
         var $players_total = players_total;
         $settings.prepend( $players_total );
