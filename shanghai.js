@@ -29,7 +29,7 @@ $( document ).ready(function() {
 		table_header += '<tr class="scores-header"><th>Round</th>';
 		for ( var i = 0; i < game.playersTotal; i++ ) {
 			table_header += '<th>';
-			table_header += '<input type="text" name="player' + i + '" />';
+			table_header += '<input class="player-name" type="text" name="player' + i + '" placeholder="Player '  + i + '" />';
 			table_header += '<div class="player-scores player-scores' + i + '" />0</div>';
 			table_header += '</th>'; 
 		}
@@ -70,11 +70,12 @@ $( document ).ready(function() {
 	});
 
 	function render_scores() {
-		game.currentRound = Math.floor( game.scores.length / ( 3 * game.playersTotal) ) + 1;
-		$('.current-round').html(game.currentRound);
+		game.roundInfo = get_round_info( game.scores, game.playersTotal );
+
+		$('.current-round').html(game.roundInfo.round);
 		var row = '';
 		$('.score-row').remove();
-		for ( var i = game.currentRound; i >= 1; i-- ) {
+		for ( var i = game.roundInfo.round; i >= 1; i-- ) {
 			row = '<tr class="score-row row' + i + '"><td>';
 			row += i;
 			row += '</td>';
@@ -89,9 +90,11 @@ $( document ).ready(function() {
 
 		});
 
-		if ( 20 <= game.currentRound ) {
+		if ( 20 <= game.roundInfo.round ) {
 			game.inProgress = false;
 		}
+
+		console.log( game );
 	}
 
 

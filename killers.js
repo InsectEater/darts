@@ -66,7 +66,7 @@ $( document ).ready(function() {
 
         $('.players select').change(function() {
             var $element = $(this);
-            $('.players select' ).each(function(){
+            $('.players select' ).each(function() {
                 if ( $( this ).val() == $element.val() && !$( this ).is( $element ) )
                     $element.val( '' );
             });
