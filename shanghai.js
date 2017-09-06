@@ -15,7 +15,7 @@ $( document ).ready(function() {
 	function game_reset() {
 		game.players = [];
 		game.scores = [];
-		game.currentRound = 1;
+		game.playersScores = [];
 		game.inProgress = false;
 		$('.current-round').html('1');
 	}
@@ -75,26 +75,44 @@ $( document ).ready(function() {
 		$('.current-round').html(game.roundInfo.round);
 		var row = '';
 		$('.score-row').remove();
-		for ( var i = game.roundInfo.round; i >= 1; i-- ) {
-			row = '<tr class="score-row row' + i + '"><td>';
-			row += i;
+
+		//Create emppty scores table
+		for ( var r = game.roundInfo.round; r >= 1; r-- ) {
+			row = '<tr class="score-row row' + r + '"><td>';
+			row += r;
 			row += '</td>';
 			for ( var p = 1; p <= game.playersTotal; p++ ) {
-				row += '<td class="cell-' + i + '-' + p + '">0</td>';
+				row += '<td class="cell-' + r + '-' + p + '">0</td>';
 			}
 			row += '</tr>';
 			$('#scores').append(row);
 		}
 
-		game.scores.map( function (value, index){
+		//Fill scores table
+		game.playersScores = [];
+		for (var r = 0; r < game.roundInfo.round; r++) {
+			for (var p = 0; p < game.playersTotal; p++) {
+				var sum = 0;
+				for ( var i = 0; i <= 2; i++ ) {
+					var index = r * game.playersTotal * 3 + p*3+ i;
+					if (! is_empty( game.scores[index] ) ) {
+						sum += game.scores[index] * ( r + 1 );
+					}
+				}
+				$( '.cell-' + ( r + 1 ) + '-' + (  p + 1 ) ).html( sum );
+				game.playersScores[p] = is_empty( game.playersScores[p] ) ? sum : game.playersScores[p] + sum;
+			}
+		}
 
-		});
+		//Fill players total scores
+		for (var p = 0; p < game.playersTotal; p++) {
+			$( '.player-scores' + p ).html( game.playersScores[p] );
+		}
 
 		if ( 20 <= game.roundInfo.round ) {
 			game.inProgress = false;
 		}
 
-		console.log( game );
 	}
 
 
