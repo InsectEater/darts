@@ -30,7 +30,7 @@ $( document ).ready(function() {
 		for ( var i = 0; i < game.playersTotal; i++ ) {
 			table_header += '<th>';
 			table_header += '<input class="player-name" type="text" name="player' + i + '" placeholder="Player '  + i + '" />';
-			table_header += '<div class="player-scores player-scores' + i + '" />0</div>';
+			table_header += '<div class="player-scores player-scores' + i + '" /></div>';
 			table_header += '</th>'; 
 		}
 		table_header += '</tr>';
@@ -47,25 +47,25 @@ $( document ).ready(function() {
 
 	$('#miss').click( function() {
 		if ( ! game.inProgress ) return;
-		game.scores.push( '0' );
+		game.scores.push( 0 );
 		render_scores();
 	});
 
 	$('#single').click( function() {
 		if ( ! game.inProgress ) return;
-		game.scores.push( '1' );
+		game.scores.push( 1 );
 		render_scores();
 	});
 
 	$('#double').click( function() {
 		if ( ! game.inProgress ) return;
-		game.scores.push( '2' );
+		game.scores.push( 2 );
 		render_scores();
 	});
 
 	$('#tripple').click( function() {
 		if ( ! game.inProgress ) return;
-		game.scores.push( '3' );
+		game.scores.push( 3 );
 		render_scores();
 	});
 
@@ -108,6 +108,15 @@ $( document ).ready(function() {
 		for (var p = 0; p < game.playersTotal; p++) {
 			$( '.player-scores' + p ).html( game.playersScores[p] );
 		}
+
+		//Fill throws table
+		$('.throw').html('');
+		var round_zero_pos = ( game.roundInfo.round - 1 ) * game.playersTotal * 3 + ( game.roundInfo.player - 1 ) * 3;
+		$('.throw1').html( game.scores[ round_zero_pos ]  * game.roundInfo.round );
+		$('.throw2').html( game.scores[ round_zero_pos + 1 ] * game.roundInfo.round );
+		$('.throw3').html( game.scores[ round_zero_pos + 2 ] * game.roundInfo.round );
+
+		// console.log(  game );
 
 		if ( 20 <= game.roundInfo.round ) {
 			game.inProgress = false;
