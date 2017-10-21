@@ -277,6 +277,9 @@ function is_empty(val) {
     return false;
 }
 
+//Returns number of round, number of player, number of throw.
+// This information is extracted from the throws array,, and depends by the
+// number_of_players and throws_per_round (default is 3).
 function get_round_info( throws, number_of_players, throws_per_round ) {
     var info = { round: 1, player: 1, throw: 1 };
     if ( is_empty( throws ) || is_empty( number_of_players ) ) {

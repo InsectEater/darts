@@ -17,7 +17,9 @@ $( document ).ready(function() {
 		game.scores = [];
 		game.playersScores = [];
 		game.inProgress = false;
-		$('.current-round').html('1');
+		render_scores();
+		$('#scores').html('');
+		$('.player-row.row-0 .playername').html('');
 	}
 
 	function game_start() {
@@ -29,14 +31,22 @@ $( document ).ready(function() {
 		table_header += '<tr class="scores-header"><th>Round</th>';
 		for ( var i = 0; i < game.playersTotal; i++ ) {
 			table_header += '<th>';
-			table_header += '<input class="player-name" type="text" name="player' + i + '" placeholder="Player '  + i + '" />';
+			table_header += '<input data-playernum="' + i + '" class="player-name" type="text" name="player' + i + '" placeholder="Player '  + i + '" />';
 			table_header += '<div class="player-scores player-scores' + i + '" /></div>';
 			table_header += '</th>'; 
+			game.players[i] = 'Player ' + i;
 		}
 		table_header += '</tr>';
 		$('#scores').html(table_header);
 		render_scores();
+
+		$('.player-name').blur( function() {
+			var player_name =  '' == $(this).val() ? 'Player ' + $(this).data('playernum') : $(this).val();
+			game.players[ parseInt( $(this).data('playernum') ) ] = player_name ;
+			render_scores();
+		} );
 	}
+
 
 	$('#del').click( function() {
 		if ( 'Start' == $('#cta-start').html() ) return;
@@ -110,18 +120,44 @@ $( document ).ready(function() {
 		}
 
 		//Fill throws table
-		$('.throw').html('');
+		$('player-row.row-0 .throw').html('');
 		var round_zero_pos = ( game.roundInfo.round - 1 ) * game.playersTotal * 3 + ( game.roundInfo.player - 1 ) * 3;
-		$('.throw1').html( game.scores[ round_zero_pos ]  * game.roundInfo.round );
-		$('.throw2').html( game.scores[ round_zero_pos + 1 ] * game.roundInfo.round );
-		$('.throw3').html( game.scores[ round_zero_pos + 2 ] * game.roundInfo.round );
+		$('.player-row.row-0 .throw1').html( game.scores[ round_zero_pos ]  * game.roundInfo.round );
+		$('.player-row.row-0 .throw2').html( game.scores[ round_zero_pos + 1 ] * game.roundInfo.round );
+		$('.player-row.row-0 .throw3').html( game.scores[ round_zero_pos + 2 ] * game.roundInfo.round );
+		$('.player-row.row-0 .playername').html( game.players[game.roundInfo.player - 1] );
 
-		// console.log(  game );
+		$('.player-row.row-0 .throw').each( function( ){
+			if ( '' == $(this).html() ) {
+				$(this).addClass('dart');
+			} else {
+				$(this).removeClass('dart');
+			}
+		} );
+
+		$('.player-row.row-1 .throw').html('');
+		$('.player-row.row-1 .playername').html('');
+
+		if ( game.roundInfo.round > 1 || game.roundInfo.player > 1 ) {
+			var round_previous_pos = round_zero_pos - 3;
+			var round_previous = game.roundInfo.round;
+			var player_previous = game.roundInfo.player - 2;
+			if ( player_previous < 0 ) {
+				player_previous = game.playersTotal - 1;
+				--round_previous;
+			}
+
+			$('.player-row.row-1 .throw1').html( game.scores[ round_previous_pos ]  * round_previous );
+			$('.player-row.row-1 .throw2').html( game.scores[ round_previous_pos + 1 ] * round_previous );
+			$('.player-row.row-1 .throw3').html( game.scores[ round_previous_pos + 2 ] * round_previous );
+			$('.player-row.row-1 .playername').html( game.players[player_previous] );			
+		}
 
 		if ( 20 <= game.roundInfo.round ) {
 			game.inProgress = false;
 		}
 
+		send_scores();
 	}
 
 

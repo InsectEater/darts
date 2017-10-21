@@ -5,7 +5,7 @@ $( document ).ready(function() {
     get_scores();
 });
 
-function fill_data() { console.log(game);
+function fill_data() {
 	$('.viewport .players').html( '' );
 	var $player = $( '#defaults .player' );
 	for (var i = 0; i < game.playersTotal; i++) {

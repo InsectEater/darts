@@ -28,11 +28,11 @@
 .current-round {
 	width: 50px;
 	text-align: center;
-	vertical-align: middle;
+	vertical-align: top;
 	padding: 2px 2px;
 	margin: 2px;
 	display: inline-block;
-	font-size: 2em;
+	font-size: 5em;
 	font-weight: bold;
 }
 
@@ -45,29 +45,97 @@
 	color: white;
 }
 
+.throws-queue {
+	max-width: 400px;
+	width: 99%;
+	margin: 6em auto 5px auto;
+}
+
+.player-row {
+	display: flex;
+	padding: 10px;
+}
+
+.playername {
+	display: inline-block;
+	width: 40%;
+}
+
 .throws {
 	height: 2em;
-	margin: 55px auto 0 auto;
+	display: inline-block;
 	display: flex;
-	width: 400px;
+	width: 60%;
 }
 
 .throw {
 	width: 33%;
+	text-align: center;
+ 	background-repeat: no-repeat;
+    background-position: center; 
+    background-size: contain;
+}
+
+.dart {
+	background-image: url('./images/dart.png');
 }
 
 .player-name {
 	box-sizing: border-box;
-    width: 100%;
-    font-size: 1em;
-    text-align: center;
-    border: none;
-    background-color: transparent;
+	width: 100%;
+	font-size: 1em;
+	font-weight: bold;
+	text-align: center;
+	border: none;
+	background-color: transparent;
 }	
+
+.player-row.row-0 {
+	font-size: 1.8em;
+	line-height: 1.8em;
+	border: 2px solid gray;
+	background-color: rgba(242, 255, 0, 0.44);
+	color: black;
+}
+
+.player-row.row-1 {
+	margin-top: 0.5em;
+	font-size: 1.1em;
+	line-height: 1.1em;
+	color: #a5a5a5;	
+}
+
 
 #scores {
 	max-width: 95%;
 	margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+table#scores {
+	border-collapse: collapse;
+	color: #444;
+}
+
+table#scores,
+#scores th,
+#scores td {
+   border: 1px solid #999;
+   text-align: center;
+   padding: 4px;
+}
+
+#scores th {
+	color: black;
+	font-weight: bold;
+}
+
+#scores th:first-child {
+	color: #444;	
+}
+
+.scores-player-name {
+	padding-left: 1.5em;
+	padding-right: 1.5em;
 }
