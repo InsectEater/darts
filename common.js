@@ -61,7 +61,8 @@ function generate_header() {
         );
         var players_total =
             '<label><span class="lbl-column">Players:</span> ' +
-            generate_playerstotal_select() +
+            //generate_playerstotal_select() +
+            players_total_select + 
             '</label>';
         var $players_total = players_total;
         $settings.prepend( $players_total );
@@ -270,5 +271,25 @@ function is_empty(val) {
         return true;
     if (null === val)
         return true;
+    if ( val.constructor == Array && 0 == val.length ) {
+        return true;
+    }
     return false;
+}
+
+//Returns number of round, number of player, number of throw.
+// This information is extracted from the throws array,, and depends by the
+// number_of_players and throws_per_round (default is 3).
+function get_round_info( throws, number_of_players, throws_per_round ) {
+    var info = { round: 1, player: 1, throw: 1 };
+    if ( is_empty( throws ) || is_empty( number_of_players ) ) {
+        return info;
+    }
+    if ( is_empty( throws_per_round ) ) {
+        throws_per_round = 3;
+    }
+    info.round = Math.floor( throws.length / ( number_of_players * throws_per_round ) ) + 1;
+    info.player = Math.floor ( throws.length / throws_per_round ) % number_of_players + 1;
+    info.throw = throws.length % 3 + 1;
+    return info;
 }
