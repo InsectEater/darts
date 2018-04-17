@@ -109,7 +109,18 @@ function generate_header() {
             set_network('disabled', '')
         }
     });
+
+    game.media = {};
+    game.media.miss =new Audio('sounds/miss_01.mp3');
+    game.media.hit1 =new Audio('sounds/hit_01.mp3');
+    game.media.hit2 =new Audio('sounds/hit_02.mp3');
     settings_get();
+}
+
+function sfx_play( effect ) {
+    game.media[effect].pause();
+    game.media[effect].currentTime = 0;
+    game.media[effect].play();
 }
 
 function generate_footer() {

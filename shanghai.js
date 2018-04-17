@@ -58,24 +58,28 @@ $( document ).ready(function() {
 	$('#miss').click( function() {
 		if ( ! game.inProgress ) return;
 		game.scores.push( 0 );
+		sfx_play( 'miss' )
 		render_scores();
 	});
 
 	$('#single').click( function() {
 		if ( ! game.inProgress ) return;
 		game.scores.push( 1 );
+		sfx_play( 'hit1' )
 		render_scores();
 	});
 
 	$('#double').click( function() {
 		if ( ! game.inProgress ) return;
 		game.scores.push( 2 );
+		sfx_play( 'hit1' )
 		render_scores();
 	});
 
 	$('#tripple').click( function() {
 		if ( ! game.inProgress ) return;
 		game.scores.push( 3 );
+		sfx_play( 'hit2' )
 		render_scores();
 	});
 
@@ -153,7 +157,7 @@ $( document ).ready(function() {
 			$('.player-row.row-1 .playername').html( game.players[player_previous] );			
 		}
 
-		if ( 20 <= game.roundInfo.round ) {
+		if ( 21 <= game.roundInfo.round ) {
 			game.inProgress = false;
 		}
 
