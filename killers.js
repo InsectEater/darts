@@ -40,6 +40,7 @@ $( document ).ready(function() {
         if (!gameInProgress) return;
         if (!check_playersinfo_filled()) return;
         scoring.push( 'miss' );
+        sfx_play( 'miss' );
         render_scores();
     });
 
